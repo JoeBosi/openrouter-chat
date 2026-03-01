@@ -20,7 +20,7 @@ class OpenRouterChatGUI:
         """Initialize the GUI application with API configuration"""
         self.root = root
         self.root.title("🤖 OpenRouter Chat - Auto Router")
-        self.root.geometry("600x700")
+        self.root.geometry("700x900")
         
         # Load environment variables
         load_dotenv()
@@ -52,6 +52,15 @@ class OpenRouterChatGUI:
         # Limits for handling long texts
         self.max_message_length = 50000  # 50KB per message
         self.max_context_messages = 50   # Maximum messages in context
+        
+        # Additional instructions for better prompts
+        self.additional_instructions = {
+            'length': 'medium',  # short, medium, long
+            'tone': 'professional',  # casual, professional, formal, friendly
+            'style': 'detailed',  # concise, detailed, creative, technical
+            'format': 'paragraph',  # paragraph, bullet_points, numbered_list
+            'custom': ''  # Custom instructions
+        }
         
         # Create GUI widgets
         self.create_widgets()
@@ -114,6 +123,69 @@ class OpenRouterChatGUI:
         self.send_button = ttk.Button(input_frame, text="Send", command=self.send_message)
         self.send_button.grid(row=1, column=1)
         
+        # Configuration frame
+        config_frame = ttk.LabelFrame(main_frame, text="Configuration", padding="10")
+        config_frame.grid(row=4, column=0, columnspan=2, sticky=(tk.W, tk.E), pady=(10, 0))
+        config_frame.columnconfigure(1, weight=1)
+        
+        # API Key field
+        ttk.Label(config_frame, text="API Key:").grid(row=0, column=0, sticky=tk.W, pady=(0, 5))
+        self.api_key_var = tk.StringVar()
+        self.api_key_entry = ttk.Entry(config_frame, textvariable=self.api_key_var, show="*", width=50)
+        self.api_key_entry.grid(row=0, column=1, sticky=(tk.W, tk.E), pady=(0, 5))
+        
+        # Load API key from .env if exists
+        if self.api_key:
+            self.api_key_var.set("*" * 20)  # Show masked version
+        
+        # Update API key button
+        self.update_key_button = ttk.Button(config_frame, text="Update Key", command=self.update_api_key)
+        self.update_key_button.grid(row=0, column=2, padx=(5, 0), pady=(0, 5))
+        
+        # Additional instructions frame
+        instructions_frame = ttk.LabelFrame(main_frame, text="Response Instructions", padding="10")
+        instructions_frame.grid(row=5, column=0, columnspan=2, sticky=(tk.W, tk.E), pady=(10, 0))
+        instructions_frame.columnconfigure(1, weight=1)
+        
+        # Length selection
+        ttk.Label(instructions_frame, text="Length:").grid(row=0, column=0, sticky=tk.W, pady=(0, 5))
+        self.length_var = tk.StringVar(value=self.additional_instructions['length'])
+        length_combo = ttk.Combobox(instructions_frame, textvariable=self.length_var, 
+                                   values=["short", "medium", "long"], state="readonly", width=15)
+        length_combo.grid(row=0, column=1, sticky=tk.W, pady=(0, 5))
+        
+        # Tone selection
+        ttk.Label(instructions_frame, text="Tone:").grid(row=0, column=2, sticky=tk.W, padx=(20, 0), pady=(0, 5))
+        self.tone_var = tk.StringVar(value=self.additional_instructions['tone'])
+        tone_combo = ttk.Combobox(instructions_frame, textvariable=self.tone_var,
+                                 values=["casual", "professional", "formal", "friendly"], state="readonly", width=15)
+        tone_combo.grid(row=0, column=3, sticky=tk.W, padx=(20, 0), pady=(0, 5))
+        
+        # Style selection
+        ttk.Label(instructions_frame, text="Style:").grid(row=1, column=0, sticky=tk.W, pady=(0, 5))
+        self.style_var = tk.StringVar(value='detailed')
+        style_combo = ttk.Combobox(instructions_frame, textvariable=self.style_var,
+                                   values=["concise", "detailed", "creative", "technical"], state="readonly", width=15)
+        style_combo.grid(row=1, column=1, sticky=tk.W, pady=(0, 5))
+        
+        # Format selection
+        ttk.Label(instructions_frame, text="Format:").grid(row=1, column=2, sticky=tk.W, padx=(20, 0), pady=(0, 5))
+        self.format_var = tk.StringVar(value=self.additional_instructions['format'])
+        format_combo = ttk.Combobox(instructions_frame, textvariable=self.format_var,
+                                   values=["paragraph", "bullet_points", "numbered_list"], state="readonly", width=15)
+        format_combo.grid(row=1, column=3, sticky=tk.W, padx=(20, 0), pady=(0, 5))
+        
+        # Custom instructions
+        ttk.Label(instructions_frame, text="Custom Instructions:").grid(row=2, column=0, sticky=tk.W, pady=(5, 0))
+        self.custom_var = tk.StringVar()
+        self.custom_entry = ttk.Entry(instructions_frame, textvariable=self.custom_var, width=70)
+        self.custom_entry.grid(row=2, column=1, columnspan=3, sticky=(tk.W, tk.E), pady=(5, 0))
+        
+        # Update instructions button
+        self.update_instructions_button = ttk.Button(instructions_frame, text="Apply Instructions", 
+                                                   command=self.update_instructions)
+        self.update_instructions_button.grid(row=3, column=0, columnspan=4, pady=(10, 0))
+        
         # Control frame
         control_frame = ttk.Frame(main_frame)
         control_frame.grid(row=3, column=0, columnspan=2, sticky=(tk.W, tk.E))
@@ -131,7 +203,7 @@ class OpenRouterChatGUI:
         self.status_label.pack(side=tk.LEFT)
         
         # Welcome message
-        self.add_message("system", "Welcome! I'm your AI assistant with Auto Router. Type a message and press Enter.")
+        self.add_message("system", "Welcome! I'm your AI assistant with Auto Router. Configure your settings below and start chatting!")
     
     def add_message(self, sender, message):
         """
@@ -209,7 +281,16 @@ class OpenRouterChatGUI:
                     f"Context reduced for optimization (max {self.max_context_messages} messages)"))
             
             # Add user message to history
-            self.messages.append({"role": "user", "content": user_message})
+            user_msg = {"role": "user", "content": user_message}
+            
+            # Add system instructions if any
+            system_prompt = self.build_system_prompt()
+            if system_prompt:
+                # Insert system message before user message
+                self.messages.append({"role": "system", "content": system_prompt})
+                self.messages.append(user_msg)
+            else:
+                self.messages.append(user_msg)
             
             # Prepare request data
             data = {
@@ -249,6 +330,124 @@ class OpenRouterChatGUI:
         finally:
             # Re-enable controls
             self.root.after(0, self.enable_controls)
+    
+    def update_api_key(self):
+        """
+        Update the API key from the input field
+        """
+        new_key = self.api_key_var.get().strip()
+        
+        if not new_key:
+            messagebox.showerror("Error", "Please enter an API key")
+            return
+        
+        # Check if it's masked (already set)
+        if new_key.startswith("*"):
+            messagebox.showinfo("Info", "API key is already set. Enter a new key to update.")
+            return
+        
+        # Update the API key
+        self.api_key = new_key
+        self.headers["Authorization"] = f"Bearer {self.api_key}"
+        
+        # Mask the display
+        self.api_key_var.set("*" * min(len(new_key), 20))
+        
+        # Save to .env file
+        try:
+            with open('.env', 'w') as f:
+                f.write(f"OPENROUTER_API_KEY={new_key}\n")
+            messagebox.showinfo("Success", "API key updated successfully!")
+            self.add_message("system", "API key updated and saved to .env file")
+        except Exception as e:
+            messagebox.showerror("Error", f"Failed to save API key: {e}")
+    
+    def update_instructions(self):
+        """
+        Update additional instructions from the GUI fields
+        """
+        self.additional_instructions['length'] = self.length_var.get()
+        self.additional_instructions['tone'] = self.tone_var.get()
+        self.additional_instructions['style'] = self.style_var.get()
+        self.additional_instructions['format'] = self.format_var.get()
+        self.additional_instructions['custom'] = self.custom_var.get()
+        
+        messagebox.showinfo("Success", "Response instructions updated!")
+        self.add_message("system", f"Instructions updated: {self.get_instruction_summary()}")
+    
+    def get_instruction_summary(self):
+        """
+        Get a summary of current instructions
+        
+        Returns:
+            str: Summary of instructions
+        """
+        parts = []
+        if self.additional_instructions['length'] != 'medium':
+            parts.append(f"length: {self.additional_instructions['length']}")
+        if self.additional_instructions['tone'] != 'professional':
+            parts.append(f"tone: {self.additional_instructions['tone']}")
+        if self.additional_instructions['style'] != 'clear':
+            parts.append(f"style: {self.additional_instructions['style']}")
+        if self.additional_instructions['format'] != 'paragraph':
+            parts.append(f"format: {self.additional_instructions['format']}")
+        if self.additional_instructions['custom']:
+            parts.append(f"custom: {self.additional_instructions['custom'][:50]}...")
+        
+        return ", ".join(parts) if parts else "default settings"
+    
+    def build_system_prompt(self):
+        """
+        Build a system prompt based on additional instructions
+        
+        Returns:
+            str: System prompt with instructions
+        """
+        instructions = []
+        
+        # Length instructions
+        length_map = {
+            'short': 'Keep your response concise and brief, under 100 words.',
+            'medium': 'Provide a balanced response with moderate detail, 100-300 words.',
+            'long': 'Give a comprehensive and detailed response, over 300 words.'
+        }
+        if self.additional_instructions['length'] in length_map:
+            instructions.append(length_map[self.additional_instructions['length']])
+        
+        # Tone instructions
+        tone_map = {
+            'casual': 'Use a friendly, informal tone like talking to a friend.',
+            'professional': 'Maintain a professional, business-like tone.',
+            'formal': 'Use a formal, respectful tone with proper etiquette.',
+            'friendly': 'Be warm, approachable, and encouraging.'
+        }
+        if self.additional_instructions['tone'] in tone_map:
+            instructions.append(tone_map[self.additional_instructions['tone']])
+        
+        # Style instructions
+        style_map = {
+            'concise': 'Be direct and to the point, avoid unnecessary words.',
+            'detailed': 'Provide thorough explanations with examples.',
+            'creative': 'Use creative language, metaphors, and engaging descriptions.',
+            'technical': 'Use precise technical terminology and structured explanations.'
+        }
+        if self.additional_instructions['style'] in style_map:
+            instructions.append(style_map[self.additional_instructions['style']])
+        
+        # Format instructions
+        format_map = {
+            'paragraph': 'Format your response as well-structured paragraphs.',
+            'bullet_points': 'Use bullet points for key information and lists.',
+            'numbered_list': 'Use numbered lists for sequential information.'
+        }
+        if self.additional_instructions['format'] in format_map:
+            instructions.append(format_map[self.additional_instructions['format']])
+        
+        # Custom instructions
+        if self.additional_instructions['custom']:
+            instructions.append(f"Additional requirements: {self.additional_instructions['custom']}")
+        
+        return " ".join(instructions) if instructions else ""
     
     def enable_controls(self):
         """Re-enable the interface controls"""
