@@ -16,12 +16,15 @@ class OpenRouterChatGUI:
     
     A graphical user interface for chatting with OpenRouter API using Auto Router model.
     Features long text support, file operations, and conversation management.
+    
+    Author: Giuseppe Bosi
+    License: MIT
     """
     
     def __init__(self, root):
         """Initialize the GUI application with API configuration"""
         self.root = root
-        self.root.title("🤖 OpenRouter Chat - Auto Router")
+        self.root.title("🤖 OpenRouter Chat - Auto Router | by Giuseppe Bosi")
         self.root.geometry("700x900")
         
         # Load environment variables
@@ -83,9 +86,17 @@ class OpenRouterChatGUI:
         main_frame.columnconfigure(1, weight=1)
         main_frame.rowconfigure(1, weight=1)
         
-        # Title
-        title_label = ttk.Label(main_frame, text="🤖 Chat with Auto Router", font=("Arial", 16, "bold"))
-        title_label.grid(row=0, column=0, columnspan=2, pady=(0, 10))
+        # Title frame
+        title_frame = ttk.Frame(main_frame)
+        title_frame.grid(row=0, column=0, columnspan=2, pady=(0, 10))
+        
+        # Main title
+        title_label = ttk.Label(title_frame, text="🤖 Chat with Auto Router", font=("Arial", 16, "bold"))
+        title_label.pack()
+        
+        # Author subtitle
+        author_subtitle = ttk.Label(title_frame, text="Created by Giuseppe Bosi | MIT License", font=("Arial", 9), foreground="gray")
+        author_subtitle.pack()
         
         # Chat area with markdown support
         self.chat_area = scrolledtext.ScrolledText(main_frame, wrap=tk.WORD, width=70, height=25, state=tk.DISABLED)
@@ -214,6 +225,10 @@ class OpenRouterChatGUI:
         # Status label
         self.status_label = ttk.Label(control_frame, text="Ready", foreground="green")
         self.status_label.pack(side=tk.LEFT)
+        
+        # Author signature
+        author_label = ttk.Label(control_frame, text="© Giuseppe Bosi", foreground="gray", font=("Arial", 8))
+        author_label.pack(side=tk.RIGHT, padx=(10, 0))
         
         # Welcome message
         self.add_message("system", "Welcome! I'm your AI assistant with Auto Router. Configure your settings below and start chatting!")

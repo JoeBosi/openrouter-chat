@@ -5,10 +5,13 @@ from dotenv import load_dotenv
 
 class OpenRouterChat:
     """
-    OpenRouter Chat CLI Application
+    OpenRouter Chat Application
     
     A command-line interface for chatting with OpenRouter API using Auto Router model.
-    Supports long text handling and conversation history management.
+    Features long text support, context management, and conversation history.
+    
+    Author: Giuseppe Bosi
+    License: MIT
     """
     
     def __init__(self):
