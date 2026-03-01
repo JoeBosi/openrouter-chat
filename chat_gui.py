@@ -245,21 +245,21 @@ class OpenRouterChatGUI:
         # Store original text for processing
         rendered_text = text
         
-        # Headers
+        # Headers (process after removing the # symbols)
         rendered_text = re.sub(r'^# (.+)$', r'\1', rendered_text, flags=re.MULTILINE)
         rendered_text = re.sub(r'^## (.+)$', r'\1', rendered_text, flags=re.MULTILINE)
         rendered_text = re.sub(r'^### (.+)$', r'\1', rendered_text, flags=re.MULTILINE)
         
-        # Bold text
+        # Bold text (**text**)
         rendered_text = re.sub(r'\*\*(.+?)\*\*', r'\1', rendered_text)
         
-        # Italic text
+        # Italic text (*text*)
         rendered_text = re.sub(r'\*(.+?)\*', r'\1', rendered_text)
         
-        # Inline code
+        # Inline code (`text`)
         rendered_text = re.sub(r'`(.+?)`', r'\1', rendered_text)
         
-        # Code blocks
+        # Code blocks (remove ``` markers)
         rendered_text = re.sub(r'```(.+?)```', r'\1', rendered_text, flags=re.DOTALL)
         
         return rendered_text
@@ -285,29 +285,45 @@ class OpenRouterChatGUI:
             
             # Process markdown line by line
             lines = message.split('\n')
+            in_code_block = False
+            
             for line in lines:
+                # Handle code blocks
+                if line.startswith('```'):
+                    if not in_code_block:
+                        in_code_block = True
+                        self.chat_area.insert(tk.END, '\n', "pre")
+                    else:
+                        in_code_block = False
+                        self.chat_area.insert(tk.END, '\n', "pre")
+                    continue
+                
+                if in_code_block:
+                    self.chat_area.insert(tk.END, line + '\n', "pre")
+                    continue
+                
+                # Handle headers
                 if line.startswith('# '):
                     self.chat_area.insert(tk.END, line[2:] + '\n', "heading1")
                 elif line.startswith('## '):
                     self.chat_area.insert(tk.END, line[3:] + '\n', "heading2")
                 elif line.startswith('### '):
                     self.chat_area.insert(tk.END, line[4:] + '\n', "heading3")
-                elif line.startswith('```'):
-                    # Code block
-                    if line == '```':
-                        self.chat_area.insert(tk.END, '\n', "pre")
-                    else:
-                        self.chat_area.insert(tk.END, line + '\n', "pre")
+                # Handle lists
                 elif line.strip().startswith('- '):
                     # Bullet point
                     self.chat_area.insert(tk.END, '  • ' + line[2:] + '\n', "assistant")
-                elif line.strip().startswith('1. '):
+                elif line.strip().startswith('1. ') or line.strip().startswith('2. ') or line.strip().startswith('3. ') or line.strip().startswith('4. ') or line.strip().startswith('5. ') or line.strip().startswith('6. ') or line.strip().startswith('7. ') or line.strip().startswith('8. ') or line.strip().startswith('9. '):
                     # Numbered list
+                    self.chat_area.insert(tk.END, '  ' + line + '\n', "assistant")
+                elif line.strip().startswith('10. ') or line.strip().startswith('11. ') or line.strip().startswith('12. '):
+                    # Double digit numbered list
                     self.chat_area.insert(tk.END, '  ' + line + '\n', "assistant")
                 else:
                     # Regular text with inline formatting
                     processed_line = self.render_markdown(line)
-                    self.chat_area.insert(tk.END, processed_line + '\n', "assistant")
+                    if processed_line.strip():  # Only add non-empty lines
+                        self.chat_area.insert(tk.END, processed_line + '\n', "assistant")
             
             self.chat_area.insert(tk.END, '\n')
         elif sender == "system":
@@ -512,9 +528,6 @@ class OpenRouterChatGUI:
         """
         instructions = []
         
-        # Always include markdown formatting instruction
-        instructions.append("Always format your responses using Markdown syntax with proper headings, bold, italic, code blocks, lists, and other formatting elements.")
-        
         # Length instructions
         length_map = {
             'short': 'Keep your response concise and brief, under 100 words.',
@@ -544,11 +557,11 @@ class OpenRouterChatGUI:
         if self.additional_instructions['style'] in style_map:
             instructions.append(style_map[self.additional_instructions['style']])
         
-        # Format instructions
+        # Format instructions (this should override general markdown)
         format_map = {
-            'paragraph': 'Format your response as well-structured paragraphs.',
-            'bullet_points': 'Use bullet points for key information and lists.',
-            'numbered_list': 'Use numbered lists for sequential information.'
+            'paragraph': 'Format your response as well-structured paragraphs using Markdown.',
+            'bullet_points': 'Use bullet points (-) for key information and lists, using Markdown formatting.',
+            'numbered_list': 'Use numbered lists (1., 2., 3.) for sequential information, using Markdown formatting.'
         }
         if self.additional_instructions['format'] in format_map:
             instructions.append(format_map[self.additional_instructions['format']])
@@ -556,6 +569,10 @@ class OpenRouterChatGUI:
         # Custom instructions
         if self.additional_instructions['custom']:
             instructions.append(f"Additional requirements: {self.additional_instructions['custom']}")
+        
+        # Add general markdown instruction at the end if not already covered by format
+        if self.additional_instructions['format'] == 'paragraph':
+            instructions.append("Use Markdown syntax for headings, bold, italic, code blocks, and other formatting elements.")
         
         return " ".join(instructions) if instructions else ""
     
