@@ -8,7 +8,6 @@ import threading
 import time
 from datetime import datetime
 import markdown2
-from tkhtmlview import HTMLLabel
 
 class OpenRouterChatGUI:
     """
