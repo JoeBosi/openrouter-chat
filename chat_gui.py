@@ -112,12 +112,11 @@ class OpenRouterChatGUI:
         self.char_count_label = ttk.Label(button_frame, text="0/50000 characters")
         self.char_count_label.pack(side=tk.RIGHT)
         
-        # Input field
-        self.input_var = tk.StringVar()
-        self.input_field = ttk.Entry(input_frame, textvariable=self.input_var, font=("Arial", 11))
-        self.input_field.grid(row=1, column=0, sticky=(tk.W, tk.E), padx=(0, 10))
-        self.input_field.bind("<Return>", lambda event: self.send_message())
-        self.input_field.bind("<KeyRelease>", self.update_char_count)
+        # Main input area
+        self.input_text = scrolledtext.ScrolledText(input_frame, width=70, height=4, wrap=tk.WORD, font=("Arial", 11))
+        self.input_text.grid(row=1, column=0, sticky=(tk.W, tk.E), padx=(0, 10))
+        self.input_text.bind("<Control-Return>", lambda event: self.send_message())
+        self.input_text.bind("<KeyRelease>", self.update_char_count)
         
         # Send button
         self.send_button = ttk.Button(input_frame, text="Send", command=self.send_message)
@@ -177,9 +176,9 @@ class OpenRouterChatGUI:
         
         # Custom instructions
         ttk.Label(instructions_frame, text="Custom Instructions:").grid(row=2, column=0, sticky=tk.W, pady=(5, 0))
-        self.custom_var = tk.StringVar()
-        self.custom_entry = ttk.Entry(instructions_frame, textvariable=self.custom_var, width=70)
-        self.custom_entry.grid(row=2, column=1, columnspan=3, sticky=(tk.W, tk.E), pady=(5, 0))
+        self.custom_text = scrolledtext.ScrolledText(instructions_frame, width=70, height=5, wrap=tk.WORD)
+        self.custom_text.grid(row=2, column=1, columnspan=3, sticky=(tk.W, tk.E), pady=(5, 0))
+        self.custom_text.insert(tk.END, self.additional_instructions['custom'])
         
         # Update instructions button
         self.update_instructions_button = ttk.Button(instructions_frame, text="Apply Instructions", 
@@ -234,7 +233,7 @@ class OpenRouterChatGUI:
         """
         Send a message to the API
         """
-        user_message = self.input_var.get().strip()
+        user_message = self.input_text.get("1.0", tk.END).strip()
         
         if not user_message:
             return
@@ -247,11 +246,11 @@ class OpenRouterChatGUI:
                 return
         
         # Clear input field
-        self.input_var.set("")
+        self.input_text.delete("1.0", tk.END)
         self.update_char_count()
         
         # Disable controls
-        self.input_field.config(state=tk.DISABLED)
+        self.input_text.config(state=tk.DISABLED)
         self.send_button.config(state=tk.DISABLED)
         self.paste_button.config(state=tk.DISABLED)
         self.file_button.config(state=tk.DISABLED)
@@ -370,7 +369,7 @@ class OpenRouterChatGUI:
         self.additional_instructions['tone'] = self.tone_var.get()
         self.additional_instructions['style'] = self.style_var.get()
         self.additional_instructions['format'] = self.format_var.get()
-        self.additional_instructions['custom'] = self.custom_var.get()
+        self.additional_instructions['custom'] = self.custom_text.get("1.0", tk.END).strip()
         
         messagebox.showinfo("Success", "Response instructions updated!")
         self.add_message("system", f"Instructions updated: {self.get_instruction_summary()}")
@@ -451,12 +450,12 @@ class OpenRouterChatGUI:
     
     def enable_controls(self):
         """Re-enable the interface controls"""
-        self.input_field.config(state=tk.NORMAL)
+        self.input_text.config(state=tk.NORMAL)
         self.send_button.config(state=tk.NORMAL)
         self.paste_button.config(state=tk.NORMAL)
         self.file_button.config(state=tk.NORMAL)
         self.status_label.config(text="Ready", foreground="green")
-        self.input_field.focus()
+        self.input_text.focus()
     
     def update_char_count(self, event=None):
         """
@@ -465,7 +464,7 @@ class OpenRouterChatGUI:
         Args:
             event: Event object (optional)
         """
-        text = self.input_var.get()
+        text = self.input_text.get("1.0", tk.END)
         char_count = len(text)
         
         # Change color if over limit
@@ -483,7 +482,7 @@ class OpenRouterChatGUI:
         try:
             clipboard_text = self.root.clipboard_get()
             if clipboard_text:
-                current_text = self.input_var.get()
+                current_text = self.input_text.get("1.0", tk.END)
                 new_text = current_text + clipboard_text
                 
                 if len(new_text) > self.max_message_length:
@@ -494,7 +493,8 @@ class OpenRouterChatGUI:
                     else:
                         return
                 
-                self.input_var.set(new_text)
+                self.input_text.delete("1.0", tk.END)
+                self.input_text.insert(tk.END, new_text)
                 self.update_char_count()
                 self.add_message("system", f"Text pasted ({len(clipboard_text)} characters)")
         except Exception as e:
@@ -526,7 +526,8 @@ class OpenRouterChatGUI:
                     else:
                         return
                 
-                self.input_var.set(content)
+                self.input_text.delete("1.0", tk.END)
+                self.input_text.insert(tk.END, content)
                 self.update_char_count()
                 filename = os.path.basename(file_path)
                 self.add_message("system", f"File '{filename}' loaded ({len(content)} characters)")
