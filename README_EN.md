@@ -137,4 +137,3 @@ If you encounter any issues or have questions, please:
 
 ---
 
-**Built with ❤️ using OpenRouter API**
