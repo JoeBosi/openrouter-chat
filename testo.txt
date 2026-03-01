@@ -1,0 +1,901 @@
+
+0:00
+Wù, visto che il primo video che ho
+0:01
+fatto su Cloud Cork sta andando
+0:03
+benissimo, vi è piaciuto un sacco in
+0:05
+termini di visualizzazione e di
+0:06
+commenti, ecco una parte due dove vi
+0:08
+faccio vedere altri quattro esempi
+0:11
+pratici concreti di come questo
+0:13
+strumento incredibile di Antropic può
+0:15
+essere utile nel vostro lavoro. Partiamo
+0:18
+subito con il numero uno. Ovviamente vi
+0:21
+faccio vedere come sempre, no, degli
+0:22
+esempi di cose che faccio io e poi voi
+0:25
+provate ad adattarle al vostro caso.
+0:26
+Allora, quello che voglio far vedere
+0:28
+oggi è come grazie all'integrazione che
+0:31
+ha con Chrome, quindi con il browser,
+0:34
+possiamo utilizzarlo per fare, per
+0:35
+esempio, scraping di attività di dati,
+0:38
+di informazioni, di cose interessanti.
+0:40
+Ad esempio, eh analizza eh usando eh la
+0:45
+skill di Google Chrome, questo profilo
+0:50
+eh LinkedIn, ok? Gli metto il link.
+0:53
+Questo profilo LinkedIn è del mio amico
+0:54
+Matteo Aliot che sicuramente non si
+0:56
+offenderà se lo uso in questo video,
+0:58
+anzi è stato ospite al mio podcast.
+0:59
+Andatevi a recuperare la puntata che
+1:01
+trovate qua sul canale YouTube che è
+1:03
+bellissima. eh gli dico eh devo
+1:06
+intervistarlo
+1:08
+per il mio podcast eh e voglio
+1:12
+analizzare le ultime cose che ha
+1:16
+pubblicato. Qua gli dico non scrivermi
+1:20
+le domande
+1:22
+perché noi non vogliamo che li ha ci
+1:23
+faccia questo. Quello dobbiamo farlo noi
+1:25
+utilizzando il nostro cervello. Dire
+1:27
+solo analizza eh gli ultimi suoi post,
+1:31
+gli argomenti trattati. eh e trova
+1:35
+spunti interessanti per l'intervista.
+1:40
+Quindi qua gli dico,
+1:42
+alla fine dell'analisi creami una lista
+1:46
+di argomenti, spunti, eh provocazioni e
+1:51
+altro che ritieni interessante
+1:54
+da trattare nel podcast. gli diamo invio
+1:59
+e se vi ricordate questo l'avevamo visto
+2:01
+velocemente anche nella, diciamo, nella
+2:03
+prima parte di questo di questo video di
+2:06
+questa di questa, diciamo, di dedicato
+2:08
+al a questo strumento, adesso si può
+2:12
+collegare con Google Chrome che infatti
+2:14
+vedete qua in sottofondo, lo tengo
+2:16
+aperto, diciamo, in un'altra schermata
+2:18
+proprio per farvi vedere adesso
+2:20
+l'interazione che ci sarà eh tra i due.
+2:22
+Come vedete la estensione di Chrome di
+2:27
+Cloud adesso ha fatto aprire un tab.
+2:30
+Vedete qua c'è, diciamo, un altro tab
+2:31
+che si è aperto sopra il mio Chrome che
+2:34
+invece era aperto qua sotto. Ce ne
+2:36
+accorgiamo che sta utilizzando Cloud che
+2:38
+quindi sta, diciamo, lavorando in
+2:40
+automatico perché c'è questa etichetta
+2:41
+qua, Cloud MCP. Vediamo qua cosa dice.
+2:44
+Ci dice mi dai la l'autorizzazione
+2:47
+eccetera. Qua gli dico allow. Qua
+2:49
+ovviamente diciamo piccola parentesi
+2:52
+sulla sicurezza, attenzione a quello che
+2:55
+fate automatizzare a questi strumenti
+2:56
+perché sappiamo sono in beta, sono molto
+2:59
+embrionali, quindi a volte possono fare,
+3:00
+diciamo, degli errori grossolani.
+3:02
+Ovviamente se, come in questo caso è
+3:03
+solo scraping, io autorizzo e vado
+3:06
+tranquillo. Quando invece devono anche
+3:08
+scrivere, fare modifiche lì attenzione
+3:10
+perché rischiate di fare qualche eh
+3:12
+diciamo qualche errore molto molto
+3:14
+grosso, molto serio. Quindi, in questo
+3:16
+momento, cosa sta facendo? diciamo, vi
+3:17
+faccio vedere qua in sottofondo, eh, lui
+3:19
+ha aperto una schermata di Chrome, si
+3:22
+sta scrollando il profilo di Matteo, sta
+3:24
+leggendo i post, come lo fa, facendo
+3:26
+degli screenshot, diciamo, automatizza
+3:28
+questa cosa e vedete che sta anche
+3:30
+scrollando il profilo, non lo sto
+3:31
+scrollando io e poi alla fine mi dirà eh
+3:33
+mi mostrerà questo report qua dentro nel
+3:36
+eh diciamo nella nella chat. Io adesso
+3:38
+qua ovviamente taglio, vi faccio vedere
+3:39
+il risultato finale perché ci metterà
+3:40
+qualche minuto per leggere tutto il
+3:42
+profilo. Faccio questa piccola parentesi
+3:44
+prima di mostrarvi il risultato finale.
+3:46
+La cosa bella di Cloud Cowork è che
+3:47
+mentre sta lavorando possiamo dargli
+3:49
+delle istruzioni aggiuntive, no? Quindi
+3:51
+il task lo facciamo evolvere. Qua per
+3:54
+esempio io ho detto fermati dopo cinque
+3:55
+post perché mi sono ricordato che nel
+3:57
+primo eh promptare,
+4:00
+quindi non volevo che si mettesse lì a
+4:02
+scrollare il profilo di Matteo
+4:03
+all'infinito. Quindi qua di nuovo
+4:04
+taglio, vi faccio vedere il risultato
+4:06
+finale del report e dopo qualche secondo
+4:08
+ha finito la sua analisi e mi dice che
+4:11
+qua, diciamo, ha creato tutto il
+4:12
+necessario. Vedete qua c'è eh sulla
+4:15
+destra, l'abbiamo visto in nell'altro
+4:17
+video, c'è il contesto, c'è il
+4:18
+progresso, quindi i task che ha fatto e
+4:20
+c'è poi quello che è stato generato.
+4:22
+Istruzioni non ci interessa. Invece
+4:24
+questo file MD è quello che, diciamo, ci
+4:27
+dà il report che abbiamo chiesto che
+4:29
+abbiamo chiesto noi. Questo vi ricordo
+4:31
+Cloud Cowork lavora fisicamente sul
+4:33
+nostro eh computer, quindi noi questo
+4:35
+file ce l'abbiamo proprio fisico, cioè
+4:37
+vi faccio vedere se io mi apro la
+4:38
+cartellina dove stiamo lavorando, eccola
+4:40
+qua. Vedete, il file è fisicamente
+4:43
+presente qua. Analisi
+4:44
+matteoaliotpodcast.mmd.
+4:46
+I file MD sono dei markdown se volete
+4:48
+saperli. Quindi mi dice, vedete, mi fa
+4:50
+questa cosa qua. Mi dice i post
+4:52
+analizzati. Qua vi metto anche una
+4:53
+piccola eh analisi del profilo di
+4:56
+LinkedIn, quindi immaginate che voglio
+4:57
+aiutarmi a farmi scrivere una intro, per
+4:59
+esempio, potrebbe essere molto utile.
+5:01
+Qua mi dice i post che ha analizzato e
+5:02
+poi mi dice, guarda, ecco alcuni temi
+5:05
+ricorrenti, alcuni spunti per
+5:07
+l'intervista, per esempio argomenti
+5:08
+caldi, qualche provocazione da lanciare,
+5:10
+qualche angolo originale e poi dei
+5:12
+numeri interessanti da citare. Quando
+5:14
+dico che l'intelligenza artificiale ci
+5:15
+deve affiancare nel lavoro, non
+5:17
+sostituire, io intendo questo, questo
+5:18
+lavoro di ricerca che prima io a mano ci
+5:21
+mettevo giorni per alcuni ospiti,
+5:23
+addirittura settimane, lo posso
+5:25
+semiautomatizzare in modo tale che poi
+5:26
+io mi concentro sulla parte importante,
+5:28
+cioè organizzare delle belle domande,
+5:31
+ovviamente poi deliberare una bella
+5:33
+intervista e così via. Ovviamente voi mi
+5:35
+potreste dire "Raf, ma io non c'ho il
+5:37
+podcast, non mi interessa questa roba".
+5:38
+Eh no, voi dovete contestualizzarlo e
+5:40
+quello che vi ho fatto vedere qui è la
+5:42
+potenza di poter analizzare pagine web.
+5:45
+Per esempio, a voi potrebbe essere vado
+5:46
+su LinkedIn e mi cerco dei potenziali
+5:48
+lead, dei partner, dei fornitori, no?
+5:50
+Delle persone interessanti per delle
+5:52
+attività che voglio fare o anche fuori
+5:54
+da LinkedIn. Questa cosa la potete fare
+5:56
+su YouTube per altri motivi, la potete
+5:57
+fare su Reddit, no? su quello che volete
+5:59
+voi. Il concetto è capite com'è potente
+6:01
+questa cosa lavora in background mentre
+6:04
+voi fate altro e la estendete
+6:05
+all'infinito. Il secondo esempio che vi
+Secondo esempio
+6:07
+faccio vedere, anche questo potrebbe
+6:08
+essere estremamente comodo. Eh, qua ho
+6:11
+messo una cartellina dentro con da
+6:13
+convertire, vedete, ci ho messo dei file
+6:15
+doc X, quindi sono dei file fatti con
+6:17
+Word. Io posso dire a Cloud Cowork,
+6:19
+visto che lavoro in locale, una cosa
+6:20
+tipo questo. Eh, trovi eh troverai una
+6:25
+cartella con dei file doc X da
+6:29
+convertire, trasformali tutti in formato
+6:33
+PDF. Ovviamente qua, diciamo, sono tre
+6:36
+file e vi faccio vedere anche, diciamo,
+6:38
+sono dei file vuoti, no? C'è scritto
+6:40
+documento di esempio tutti e tre, cioè
+6:42
+ho copiato e incollato, giusto per fare
+6:44
+per avere dei file sui quali lavorare.
+6:45
+Però immaginate questa cosa su grandi
+6:47
+numeri ed è l'esempio che vi faccio
+6:49
+sempre quando porto queste questi
+6:51
+strumenti, quanto vi velocizza il
+6:53
+lavoro. Qua vedete quello che sta
+6:55
+facendo eh diciamo il cloud cowork e qua
+6:59
+lascio la finestra proprio diciamo del
+7:01
+del mio PC, del mio Mac, aperta perché
+7:04
+vi faccio vedere che adesso in tempo
+7:05
+reale qua dentro saranno creati i file
+7:08
+PDF. Eh, la potenza, in questo caso,
+7:11
+dello strumento è che attraverso le
+7:13
+skill può fare anche delle operazioni
+7:15
+che normalmente Cloud non potrebbe fare.
+7:17
+Eh, tutte le limitazioni di Cloud come
+7:20
+applicazione web vengono superate in
+7:22
+questo caso dal fatto che Cowork è
+7:24
+un'applicazione fisicamente installata
+7:25
+sul mio computer, quindi può lavorare
+7:27
+sui file. In questo caso sta leggendo,
+7:29
+convertendo, sta facendo due azioni e
+7:31
+poi dal fatto che con le skill, quindi
+7:34
+diciamo questi pezzettini aggiuntivi,
+7:36
+può avere acquisire delle nuove
+7:39
+funzionalità che normalmente non
+7:41
+avrebbe. Quindi vedete qua sta si è
+7:42
+fatto il solito piano, eh qua sopra c'è
+7:45
+il piano, il progresso, qua c'è tutto
+7:46
+quello, diciamo, che fa cloud, eventuale
+7:48
+output e così via. E qua c'è il il
+7:50
+contesto. Le skill che sta utilizzando
+7:52
+sono la skill per leggere i doc e la
+7:54
+skill per creare i PDF. Eh, se non
+7:56
+l'avete fatto, mentre lui qua procede
+7:58
+con la conversione, vi ricordo di
+7:59
+mettere like e commento tattico a questo
+8:01
+video, perché perché il primo vi è
+8:03
+piaciuto tantissimo. Vi avevo promesso
+8:04
+che se andava bene ne facevo un secondo.
+8:06
+Ed ecco la seconda parte ve la siete
+8:08
+meritata. Mi raccomando, iniziate a
+8:09
+utilizzare questi strumenti di cloud
+8:11
+perché sono incredibili e, come vi ho
+8:13
+fatto vedere, sono estremamente
+8:14
+accessibili anche a chi non scrive
+8:16
+codice. Non stiamo usando Cloud Code,
+8:18
+che è un pochino più tecnico, no? un
+8:19
+pochino più per sbanettoni. Qua
+8:20
+semplicemente dobbiamo avere la giusta
+8:23
+eh idea in testa e saperla descrivere,
+8:26
+no? Come eh ha detto il prof Scarano
+8:29
+nell'intervista che vi consiglio di
+8:31
+vedere qua sul canale, devi saper
+8:33
+spiegare bene il problema, descrivere
+8:35
+bene il problema. Eh like, commento
+8:37
+tattico e magari mi dite quale di queste
+8:39
+quattro che vi ho fatto vedere è quella
+8:40
+più utile, oppure meglio ancora,
+8:42
+commentate dicendo come lo state
+8:44
+utilizzando voi, no? Sapete, vi invito
+8:45
+sempre a commentare e raccontare le
+8:47
+vostre storie perché da un vostro
+8:48
+commento qualcuno può imparare qualcosa,
+8:50
+dal commento di qualcun altro voi potete
+8:52
+imparare qualcosa. Ecco qua. Quindi
+8:54
+documento uno, doc, documento 2, diciamo
+8:57
+un PDF. Vi faccio vedere anche il PDF,
+8:59
+no? Che si vede bene, eh. Qua c'è il 2
+9:02
+doc, il 2 PDF, il 3 doc, il 3 PDF. E uno
+9:04
+qua potrebbe dirmi, "Raf, sì, ma visto
+9:06
+ci ha messo quasi un minuto, 2 minuti,
+9:08
+allora non faccio prima a farmela a
+9:09
+mano." Non dovete ragionare in
+9:11
+quest'ottica. Questo è il vecchio
+9:12
+approccio, no? No, è la vecchia
+9:14
+mentalità. Certo che se io me li apro a
+9:16
+mano e faccio esporta in PDF forse ci
+9:19
+metto di meno, ma il fatto è che siccome
+9:20
+lavoro in sottofondo glielo fate fa lui,
+9:23
+mentre voi fate altro. Vi concentrate su
+9:25
+cose più importanti perché immagino che
+9:27
+il vostro tempo non lo vogliate passare
+9:29
+a convertire file PDF. E questo era
+9:30
+l'esempio numero due. Ma prima di
+Sponsor: NordVPN
+9:32
+procedere con il terzo esempio,
+9:34
+lasciatemi ringraziare lo sponsor di
+9:35
+questo video che è Nord VPN. E mi
+9:37
+raccomando, non skippate la parte con
+9:39
+gli sponsor perché è grazie a loro che
+9:41
+vi posso portare questi video. Sapete
+9:43
+che Nord VPN è uno strumento che vi
+9:44
+consiglio di avere nella vostra cassetta
+9:46
+degli attrezzi perché vi permette di
+9:47
+navigare in tutta tranquillità,
+9:49
+serenità, soprattutto se come me spesso
+9:52
+vi collegate da Wi-Fi pubbliche, quindi
+9:54
+hotel, stazioni, aeroporti, caffè e così
+9:58
+via. Ormai Nord VPN è molto più che una
+10:01
+VPN perché è diventato un pacchetto, una
+10:03
+suite di strumenti. Vi protegge dai
+10:05
+malware, vi protegge dai siti
+10:07
+ingannevoli, dalle truffe on e così via.
+10:10
+Negli anni hanno aggiunto sempre più
+10:12
+funzionalità. La VPN la potete abilitare
+10:14
+in oltre 130 paesi. C'è la Meshnet,
+10:17
+inoltre c'è il Trad Protection Pro che
+10:19
+vi blocca malware, pubblicità e anche i
+10:22
+tracker. C'è il data bridge scanner che
+10:25
+controlla se le vostre password, i
+10:26
+vostri indirizzi email o i dati delle
+10:28
+card di credito sono stati divulgati e
+10:30
+quindi sono accessibili pubblicamente.
+10:32
+Potete avere l'IP dedicato e tante tante
+10:34
+altre cose. Vi ricordo ovviamente che
+10:36
+c'è sempre una promo in corso con
+10:38
+Nordvpn. Potete utilizzare il link
+10:40
+nordvpn.com/gaito
+10:43
+e vi beccate uno sconticino esclusivo
+10:45
+per la mia community e poi avete quattro
+10:47
+mesi extra in regala sull'abbonamento
+10:50
+biennale che non fa mai male. E
+10:52
+ovviamente vi ricordo che quando
+10:53
+utilizzate il link, no, dei miei
+10:55
+partner, in questo caso passate dal mio
+10:56
+link di Nord VPN e state anche
+10:58
+supportando il mio lavoro. È il modo
+11:01
+facile e veloce di supportare il mio
+11:02
+lavoro. La VPN è utilissima perché la
+11:05
+utilizziamo per provare in anteprima le
+11:06
+cose che non sono disponibili in Italia
+11:08
+e anche per navigare tranquilli e sereni
+11:11
+online. nordvpn.com/gaito
+11:14
+per accedere alla promo. E ora passiamo
+11:16
+al terzo esempio di Cloud Cowork. Il
+Terzo esempio
+11:18
+terzo esempio ve lo faccio vedere,
+11:20
+diciamo, già fatto per velocizzare
+11:22
+perché ci mette un bel po', anche perché
+11:23
+è un esempio che ho utilizzato in
+11:26
+precedenza, ed è questo qua. Questa è
+11:28
+una playlist sul mio canale YouTube con
+11:30
+una serie di interviste. Mi riesce a
+11:32
+dare la lista degli URL, dei video al
+11:33
+suo interno? Eh, questo è il mio podcast
+11:36
+su YouTube, ovviamente è una playlist
+11:38
+dedicata. Eh, e questo è il link per
+11:40
+accedere alla playlist. A me serviva un
+11:42
+modo veloce di accedere a tutti i video
+11:44
+al suo interno. In questo caso non ha
+11:46
+utilizzato il l'estensione di Chrome,
+11:48
+non è riuscito a farlo in automatico, in
+11:50
+particolar modo l'ha fatto tramite
+11:51
+JavaScript e vedete come in una manciata
+11:54
+di secondi mi ha tirato fuori il titolo
+11:56
+e il e il link. Titolo e link, titolo e
+11:58
+link. vedete per tutte le interviste che
+11:59
+ho pubblicato, ovviamente ce ne sono di
+12:01
+più adesso. Questo è quando ho fatto
+12:03
+effettivamente questo passaggio. Ma a
+12:05
+questo punto mi sono ricordato di una
+12:07
+cosa, cioè mi servivano anche le date di
+12:09
+pubblicazione e quindi gli ho detto
+12:11
+aggiungi nella tabella anche la data di
+12:13
+pubblicazione e quindi dice vabbè questo
+12:15
+per poterlo fare devo visitare la pagina
+12:17
+di ciascun video e qua torniamo alla
+12:20
+cosa potente, una delle tante cose
+12:21
+potenti che può fare Cloud Cowork, cioè
+12:23
+ha fatto partire in parallelo 16 task.
+12:27
+Questa è un'altra di quelle cose,
+12:28
+diciamo, che dal web sarebbe difficile,
+12:30
+impossibile da fare. Quindi, visto che
+12:32
+aveva 16 indirizzi salvati, ha fatto
+12:35
+partire 16 chiamate, ha preso le date e
+12:38
+mi ha migliorato la tabella, no? Mi ha
+12:40
+detto "Ok, adesso ti dico il titolo, la
+12:42
+data e anche l'indirizzo di quella
+12:44
+intervista". E poi diciamo eh dopo qua,
+12:47
+diciamo, ho fatto altre cose che ve le
+12:49
+faccio vedere all'interno della quarta
+12:52
+eh chicca che si può fare con Colod
+12:54
+Cork. E come vi dicevo, il quarto e
+Quarto esempio
+12:56
+ultimo esempio che vi faccio vedere,
+12:58
+anche questo l'ho già fatto, ve lo
+12:59
+faccio vedere registrato per velocità,
+13:02
+per velocizzare, eh ho, diciamo, fatto
+13:05
+quel lavoro, no, di scaricare le
+13:06
+interviste e metterle dentro un file
+13:08
+CSV. Eh, quindi c'abbiamo l'elenco di
+13:12
+data, eh persona ospite intervistato e
+13:15
+indirizzo, quindi URL dell'intervista.
+13:17
+Qua gli dico, nella cartella c'è il file
+13:19
+CSV con le interviste. Questo l'ho
+13:21
+creato con, diciamo, l'esempio del punto
+13:23
+tre. per ognuno dei video elencati nel
+13:25
+file estrail transcript YouTube inclusi
+13:29
+usando l'apposita skill perché perché io
+13:32
+c'ho una skill che mi permette di fare
+13:34
+questa cosa e su questo ci torniamo.
+13:35
+Salvo in un file con questo nome, quindi
+13:38
+anno, mese, giorno, quindi quattro per
+13:40
+il l'anno, due per il mese, due per il
+13:42
+giorno, trattino nome ospite ad esempio
+13:45
+2025704 Nello Cristianini, la primissima
+13:48
+che ho fatta nel podcast, andatevela a
+13:50
+vedere se non l'avete vista che è molto
+13:51
+molto usa l'apposita skill, non
+13:54
+usare mai il browser per fare questa
+13:56
+cosa. Infatti il quarto e ultimo esempio
+13:58
+che vi voglio dare qual è? È il fatto
+14:00
+che cloud cowork, anche code diciamo si
+14:03
+può estendere all'infinito con le skill.
+14:05
+Di default questi strumenti non possono
+14:07
+accedere ai transcript YouTube, lo può
+14:09
+fare solo Gemini perché è di Google e
+14:11
+quindi gli danno accesso, ma siccome ci
+14:13
+sono le skill e le skill sono dei
+14:15
+pezzettini di codice che estendono
+14:17
+all'infinito le funzionalità, io mi sono
+14:19
+scritto una skill per fare questa cosa,
+14:22
+quindi per estrarre gli eh diciamo i eh
+14:25
+i transcript direttamente dai video di
+14:28
+eh di YouTube. E vedete qua sotto fa
+14:30
+vedere che la usa, si chiama YouTube
+14:31
+Transcript RF. Infatti questa è una
+14:33
+modifica di una skill che ho trovata
+14:35
+online. Non dovrei dire che l'ho scritta
+14:37
+io. L'ho trovata, l'ho scaricata, me la
+14:38
+son modificata leggermente per farla
+14:40
+funzionare come volevo io. E questo lo
+14:42
+potete fare, diciamo, senza scrivere
+14:44
+codice, perché perché vi aiuta Cloud sia
+14:46
+nella creazione di skill, sia nella
+14:49
+modifica di di skill. Questa cosa è
+14:51
+molto molto potente. E vedete cosa fa
+14:53
+qua. La cosa qual è? Eh, i video
+14:55
+sono in italiano, li lancio in parallelo
+14:57
+per velocizzare. Qua in parallelo ha
+14:59
+lanciato 16 comandi e m'ha creato 16
+15:02
+file. No, ci sono proprio i file txt con
+15:04
+tutte le interviste dentro. Qua se ci
+15:06
+vado le troverò dentro trascript
+15:08
+interviste. Eccolo qua. Vedete per
+15:09
+esempio neap Nello Cristianini. Qua c'è
+15:12
+il time stamp con il relativo ehm
+15:16
+diciamo pezzo, no? Quello che è stato
+15:18
+detto all'interno di quella intervista.
+15:20
+Questo era il quarto e ultimo esempio e
+15:22
+voi mi potreste dire a questo punto,
+15:24
+Raf, scusami, ma che te ne fai poi di
+15:26
+avere tutte le interviste in locale?
+15:28
+Ovviamente a voi non interessa questo
+15:30
+aspetto qua. Qua è farvi vedere le
+15:31
+skill, cioè capite il fatto che con le
+15:34
+skill vi potete scrivere dei pezzettini
+15:36
+aggiuntivi di cloud per fargli fare cose
+15:38
+che normalmente non potrebbe farle in
+15:40
+maniera personalizzata. Su questa cosa
+15:43
+io ci ho fatto un video dedicato proprio
+15:45
+su come lavorare con le skill, quindi se
+15:47
+vi interessa anche questa parte qua,
+15:48
+cliccate il video che vi compare adesso
+15:50
+a schermo e andatevi a vedere pure come
+15:51
+creare le skill all'interno di Cloud. M.
