@@ -7,6 +7,8 @@ from dotenv import load_dotenv
 import threading
 import time
 from datetime import datetime
+import markdown2
+from tkhtmlview import HTMLLabel
 
 class OpenRouterChatGUI:
     """
@@ -49,6 +51,9 @@ class OpenRouterChatGUI:
         # Conversation history
         self.messages = []
         
+        # Track current system instructions to avoid duplication
+        self.current_system_prompt = ""
+        
         # Limits for handling long texts
         self.max_message_length = 50000  # 50KB per message
         self.max_context_messages = 50   # Maximum messages in context
@@ -82,14 +87,23 @@ class OpenRouterChatGUI:
         title_label = ttk.Label(main_frame, text="🤖 Chat with Auto Router", font=("Arial", 16, "bold"))
         title_label.grid(row=0, column=0, columnspan=2, pady=(0, 10))
         
-        # Chat area
+        # Chat area with markdown support
         self.chat_area = scrolledtext.ScrolledText(main_frame, wrap=tk.WORD, width=70, height=25, state=tk.DISABLED)
         self.chat_area.grid(row=1, column=0, columnspan=2, sticky=(tk.W, tk.E, tk.N, tk.S), pady=(0, 10))
         
-        # Configure tags for colors
-        self.chat_area.tag_config("user", foreground="blue", font=("Arial", 10, "bold"))
-        self.chat_area.tag_config("assistant", foreground="green", font=("Arial", 10))
-        self.chat_area.tag_config("system", foreground="gray", font=("Arial", 9, "italic"))
+        # Configure tags for different message types and markdown elements
+        self.chat_area.tag_config("user", foreground="#0066cc", font=("Arial", 10, "bold"))
+        self.chat_area.tag_config("assistant", foreground="#009900", font=("Arial", 10))
+        self.chat_area.tag_config("system", foreground="#666666", font=("Arial", 9, "italic"))
+        
+        # Markdown formatting tags
+        self.chat_area.tag_config("heading1", font=("Arial", 14, "bold"))
+        self.chat_area.tag_config("heading2", font=("Arial", 13, "bold"))
+        self.chat_area.tag_config("heading3", font=("Arial", 12, "bold"))
+        self.chat_area.tag_config("bold", font=("Arial", 10, "bold"))
+        self.chat_area.tag_config("italic", font=("Arial", 10, "italic"))
+        self.chat_area.tag_config("code", font=("Consolas", 10), background="#f0f0f0")
+        self.chat_area.tag_config("pre", font=("Consolas", 9), background="#f8f8f8", lmargin1=20, lmargin2=20)
         
         # Input frame
         input_frame = ttk.Frame(main_frame)
@@ -204,26 +218,85 @@ class OpenRouterChatGUI:
         # Welcome message
         self.add_message("system", "Welcome! I'm your AI assistant with Auto Router. Configure your settings below and start chatting!")
     
-    def add_message(self, sender, message):
+    def render_markdown(self, text):
         """
-        Add a message to the chat area
+        Render markdown text with formatting tags
         
         Args:
-            sender (str): Message sender ('user', 'assistant', 'system')
+            text (str): Markdown text to render
+        """
+        import re
+        
+        # Store original text for processing
+        rendered_text = text
+        
+        # Headers
+        rendered_text = re.sub(r'^# (.+)$', r'\1', rendered_text, flags=re.MULTILINE)
+        rendered_text = re.sub(r'^## (.+)$', r'\1', rendered_text, flags=re.MULTILINE)
+        rendered_text = re.sub(r'^### (.+)$', r'\1', rendered_text, flags=re.MULTILINE)
+        
+        # Bold text
+        rendered_text = re.sub(r'\*\*(.+?)\*\*', r'\1', rendered_text)
+        
+        # Italic text
+        rendered_text = re.sub(r'\*(.+?)\*', r'\1', rendered_text)
+        
+        # Inline code
+        rendered_text = re.sub(r'`(.+?)`', r'\1', rendered_text)
+        
+        # Code blocks
+        rendered_text = re.sub(r'```(.+?)```', r'\1', rendered_text, flags=re.DOTALL)
+        
+        return rendered_text
+    
+    def add_message(self, sender, message):
+        """
+        Add a message to the chat area with markdown rendering
+        
+        Args:
+            sender (str): Message sender (user, assistant, system)
             message (str): Message content
         """
+        timestamp = datetime.now().strftime("%H:%M")
+        
         self.chat_area.config(state=tk.NORMAL)
         
-        # Timestamp for user/assistant messages
-        timestamp = datetime.now().strftime("%H:%M:%S")
-        
         if sender == "user":
-            # Truncate very long messages for display
-            display_message = message[:1000] + "..." if len(message) > 1000 else message
-            self.chat_area.insert(tk.END, f"[{timestamp}] You: {display_message}\n\n", "user")
+            # User messages are plain text
+            self.chat_area.insert(tk.END, f"[{timestamp}] You: {message}\n\n", "user")
         elif sender == "assistant":
-            self.chat_area.insert(tk.END, f"[{timestamp}] Assistant: {message}\n\n", "assistant")
+            # Assistant messages are rendered with markdown
+            self.chat_area.insert(tk.END, f"[{timestamp}] Assistant:\n", "assistant")
+            
+            # Process markdown line by line
+            lines = message.split('\n')
+            for line in lines:
+                if line.startswith('# '):
+                    self.chat_area.insert(tk.END, line[2:] + '\n', "heading1")
+                elif line.startswith('## '):
+                    self.chat_area.insert(tk.END, line[3:] + '\n', "heading2")
+                elif line.startswith('### '):
+                    self.chat_area.insert(tk.END, line[4:] + '\n', "heading3")
+                elif line.startswith('```'):
+                    # Code block
+                    if line == '```':
+                        self.chat_area.insert(tk.END, '\n', "pre")
+                    else:
+                        self.chat_area.insert(tk.END, line + '\n', "pre")
+                elif line.strip().startswith('- '):
+                    # Bullet point
+                    self.chat_area.insert(tk.END, '  • ' + line[2:] + '\n', "assistant")
+                elif line.strip().startswith('1. '):
+                    # Numbered list
+                    self.chat_area.insert(tk.END, '  ' + line + '\n', "assistant")
+                else:
+                    # Regular text with inline formatting
+                    processed_line = self.render_markdown(line)
+                    self.chat_area.insert(tk.END, processed_line + '\n', "assistant")
+            
+            self.chat_area.insert(tk.END, '\n')
         elif sender == "system":
+            # System messages are plain text with different style
             self.chat_area.insert(tk.END, f"[{timestamp}] {message}\n\n", "system")
         
         self.chat_area.config(state=tk.DISABLED)
@@ -279,17 +352,24 @@ class OpenRouterChatGUI:
                 self.root.after(0, lambda: self.add_message("system", 
                     f"Context reduced for optimization (max {self.max_context_messages} messages)"))
             
+            # Build current system prompt
+            system_prompt = self.build_system_prompt()
+            
+            # Remove old system message if it exists and instructions changed
+            if self.messages and self.messages[0]["role"] == "system":
+                if system_prompt != self.current_system_prompt:
+                    # Instructions changed, remove old system message
+                    self.messages = self.messages[1:]
+                    self.current_system_prompt = system_prompt
+            
+            # Add system message if we have instructions and no system message exists
+            if system_prompt and (not self.messages or self.messages[0]["role"] != "system"):
+                self.messages.insert(0, {"role": "system", "content": system_prompt})
+                self.current_system_prompt = system_prompt
+            
             # Add user message to history
             user_msg = {"role": "user", "content": user_message}
-            
-            # Add system instructions if any
-            system_prompt = self.build_system_prompt()
-            if system_prompt:
-                # Insert system message before user message
-                self.messages.append({"role": "system", "content": system_prompt})
-                self.messages.append(user_msg)
-            else:
-                self.messages.append(user_msg)
+            self.messages.append(user_msg)
             
             # Prepare request data
             data = {
@@ -365,14 +445,27 @@ class OpenRouterChatGUI:
         """
         Update additional instructions from the GUI fields
         """
+        old_instructions = self.additional_instructions.copy()
+        
         self.additional_instructions['length'] = self.length_var.get()
         self.additional_instructions['tone'] = self.tone_var.get()
         self.additional_instructions['style'] = self.style_var.get()
         self.additional_instructions['format'] = self.format_var.get()
         self.additional_instructions['custom'] = self.custom_text.get("1.0", tk.END).strip()
         
-        messagebox.showinfo("Success", "Response instructions updated!")
-        self.add_message("system", f"Instructions updated: {self.get_instruction_summary()}")
+        # Check if instructions actually changed
+        if old_instructions != self.additional_instructions:
+            # Reset system prompt tracking to force update
+            self.current_system_prompt = ""
+            
+            # Remove existing system message from conversation
+            if self.messages and self.messages[0]["role"] == "system":
+                self.messages = self.messages[1:]
+            
+            messagebox.showinfo("Success", "Response instructions updated!\nNew instructions will apply to next messages.")
+            self.add_message("system", f"Instructions updated: {self.get_instruction_summary()}")
+        else:
+            messagebox.showinfo("Info", "Instructions unchanged.")
     
     def get_instruction_summary(self):
         """
@@ -403,6 +496,9 @@ class OpenRouterChatGUI:
             str: System prompt with instructions
         """
         instructions = []
+        
+        # Always include markdown formatting instruction
+        instructions.append("Always format your responses using Markdown syntax with proper headings, bold, italic, code blocks, lists, and other formatting elements.")
         
         # Length instructions
         length_map = {
@@ -566,14 +662,14 @@ class OpenRouterChatGUI:
                 messagebox.showerror("Error", f"Unable to export chat: {e}")
     
     def clear_chat(self):
-        """
-        Clear the chat history
-        """
-        self.messages = []
-        self.chat_area.config(state=tk.NORMAL)
-        self.chat_area.delete(1.0, tk.END)
-        self.chat_area.config(state=tk.DISABLED)
-        self.add_message("system", "Chat cleared. Start a new conversation!")
+        """Clear the chat history"""
+        if messagebox.askyesno("Clear Chat", "Are you sure you want to clear the entire conversation?"):
+            self.messages = []
+            self.current_system_prompt = ""
+            self.chat_area.config(state=tk.NORMAL)
+            self.chat_area.delete("1.0", tk.END)
+            self.chat_area.config(state=tk.DISABLED)
+            self.add_message("system", "Chat cleared. Ready for a new conversation!")
 
 def main():
     """

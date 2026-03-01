@@ -1,2 +1,5 @@
-requests>=2.31.0
+requests>=2.32.4
 python-dotenv>=1.0.0
+markdown2>=2.5.4
+tkhtmlview>=0.3.2
+pillow>=11.0.0
